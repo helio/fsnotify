@@ -1,4 +1,4 @@
-//go:build windows
+//go:build windows && !usn
 
 package fsnotify
 
@@ -6,11 +6,15 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+
+	"go.uber.org/goleak"
 )
 
+func TestMain(m *testing.M) {
+	goleak.VerifyTestMain(m)
+}
+
 func TestRemoveState(t *testing.T) {
-	// TODO: the Windows backend is too confusing; needs some serious attention.
-	return
 
 	var (
 		tmp  = t.TempDir()
